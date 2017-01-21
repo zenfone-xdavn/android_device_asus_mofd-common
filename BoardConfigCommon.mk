@@ -15,21 +15,22 @@
 #
 
 TARGET_ARCH := x86
-TARGET_ARCH_VARIANT := silvermont
+TARGET_ARCH_VARIANT := atom
 TARGET_CPU_ABI := x86
 TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
-TARGET_BOARD_PLATFORM := moorefield
-TARGET_BOOTLOADER_BOARD_NAME := moorefield
+TARGET_BOARD_PLATFORM := clovertrail
+TARGET_BOOTLOADER_BOARD_NAME := clovertrail
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
-TARGET_SPECIFIC_HEADER_PATH := device/asus/mofd-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/asus/T00F/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
+TARGET_RELEASETOOL_MAKE_RECOVERY_PATCH_SCRIPT := ./device/asus/T00F/make_recovery_patch
 
 # Adb
 BOARD_FUNCTIONFS_HAS_SS_COUNT := true
@@ -44,10 +45,9 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/mofd-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/T00F/bluetooth
 
-# bootstub as 2nd bootloader
-TARGET_BOOTLOADER_IS_2ND := true
+
 
 # Camera
 INTEL_USE_CAMERA_UVC := true
@@ -74,20 +74,17 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
+BOARD_HARDWARE_CLASS := device/asus/T00F/cmhw
 
 # Healthd
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.moorefield
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.clovertrail
 
 # Houdini: enable ARM codegen for x86
 BUILD_ARM_FOR_X86 := true
 
 # IMG graphics
-BOARD_GFX_REV := RGX6400
-ENABLE_IMG_GRAPHICS := true
-ENABLE_MRFL_GRAPHICS := true
-INTEL_HWC_MOOREFIELD := true
 BOARD_GLOBAL_CFLAGS += -DASUS_ZENFONE2_LP_BLOBS
+ENABLE_IMG_GRAPHICS := true
 HWUI_IMG_FBO_CACHE_OPTIM := true
 TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
 
@@ -95,13 +92,12 @@ TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
-BOARD_EGL_CFG := device/asus/mofd-common/configs/egl.cfg
+BOARD_EGL_CFG := device/asus/T00F/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.opengles.version = 196608
+    ro.opengles.version = 131072
 
-MAX_EGL_CACHE_ENTRY_SIZE := 65536
-MAX_EGL_CACHE_SIZE := 1048576
+
 
 INTEL_VA := true
 BUILD_WITH_FULL_STAGEFRIGHT := true
@@ -117,19 +113,25 @@ USE_OPENGL_RENDERER := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 
 # Init
-TARGET_INIT_VENDOR_LIB := libinit_mofd
-TARGET_LIBINIT_DEFINES_FILE := device/asus/mofd-common/init/init_mofd.cpp
+TARGET_INIT_VENDOR_LIB := libinit_ctp
+TARGET_LIBINIT_DEFINES_FILE := device/asus/T00F/init/init_ctp.cpp
 TARGET_INIT_UMOUNT_AND_FSCK_IS_UNSAFE := true
 
+# OTA Packaging / Bootimg creation
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_MKBOOTIMG := pack_intel
+BOARD_CUSTOM_BOOTIMG_MK := device/asus/T00F/mkbootimg.mk
+DEVICE_BASE_BOOT_IMAGE := device/asus/T00F/base_images/boot.img
+DEVICE_BASE_RECOVERY_IMAGE := device/asus/T00F/base_images/recovery.img
+NEED_KERNEL_MODULE_ROOT := true
+
 # Inline kernel building
-TARGET_KERNEL_SOURCE := kernel/asus/moorefield
+TARGET_KERNEL_SOURCE := kernel/asus/T00F
 TARGET_KERNEL_ARCH := x86_64
 BOARD_KERNEL_IMAGE_NAME := bzImage
-TARGET_KERNEL_CONFIG := cyanogenmod_zenfone2_defconfig
+TARGET_KERNEL_CONFIG := lineage_T00F_defconfig
+BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=ttyS0 console=logk0 earlyprintk=nologger bootup.uart=0 loglevel=8 kmemleak=off androidboot.selinux=permissive androidboot.bootmedia=sdcard androidboot.hardware=redhookbay watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on vmalloc=172M
 
-# Kernel cmdline
-BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=logk0 loglevel=0 vmalloc=256M androidboot.hardware=mofd_v1 watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 gpt snd_pcm.maximum_substreams=8 ptrace.ptrace_can_access=1 panic=15 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on debug_locks=0 n_gsm.mux_base_conf=\"ttyACM0,0 ttyXMM0,1\" bootboost=1'
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
@@ -170,7 +172,7 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 1677721600
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 
 # PowerHAL
-TARGET_POWERHAL_VARIANT := mofd_v1
+TARGET_POWERHAL_VARIANT := redhookbay
 
 # Radio
 BOARD_PROVIDES_LIBRIL := true
@@ -178,22 +180,22 @@ BOARD_PROVIDES_LIBRIL := true
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-TARGET_RECOVERY_FSTAB := device/asus/mofd-common/rootdir/etc/fstab.mofd_v1
-TARGET_RECOVERY_DEVICE_MODULES := libinit_mofd librecovery_updater_mofd thermald
+TARGET_RECOVERY_FSTAB := device/asus/T00F/rootdir/etc/fstab.redhookbay
+TARGET_RECOVERY_DEVICE_MODULES := libinit_ctp librecovery_updater_ctp thermald upi_ug31xx
 TARGET_RECOVERY_DENSITY := hdpi
 
 # Release tools
-TARGET_RELEASETOOLS_EXTENSIONS := device/asus/mofd-common/releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := device/asus/T00F/releasetools
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
 BUILD_WITH_CHAABI_SUPPORT := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/asus/mofd-common/sepolicy
+BOARD_SEPOLICY_DIRS += device/asus/T00F/sepolicy
 
-# Tap-to-Wake
-TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
+# DT2W
+TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:00.3/i2c-0/0-0020/input/input1/dclick_mode"
 
 # Wifi
 BOARD_WLAN_DEVICE           := bcmdhd
@@ -203,9 +205,16 @@ WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER        := NL80211
 CONFIG_HS20                 := true
+ifneq ($(filter T00F T00G,$(TARGET_DEVICE)),)
+WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/bcm43362/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_AP    := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
+WIFI_DRIVER_FW_PATH_STA   := "/system/etc/firmware/fw_bcmdhd_43362.bin"
+WIFI_DRIVER_MODULE_ARG := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"
+else
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
+endif
 
 # Use the non-open-source parts, if they're present
--include vendor/asus/mofd-common/BoardConfigVendor.mk
+-include vendor/asus/T00F/BoardConfigVendor.mk
