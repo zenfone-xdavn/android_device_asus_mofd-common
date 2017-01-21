@@ -1,11 +1,11 @@
 
-ifneq ($(filter Z00A Z008,$(TARGET_DEVICE)),)
+ifneq ($(filter T00F,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := librecovery_updater_mofd
+LOCAL_MODULE := librecovery_updater_cpp
 LOCAL_SRC_FILES := recovery_updater.cpp fw_version_check.cpp
 LOCAL_C_INCLUDES += bootable/recovery
 
