@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+BOARD_TOUCHSCREEN_DRIVER := synaptics_dsx
+
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
@@ -21,7 +23,7 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalv
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 DEVICE_PACKAGE_OVERLAYS := \
-    device/asus/mofd-common/overlay
+    device/asus/T00F/overlay
 
 # Art
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -40,19 +42,19 @@ PRODUCT_PACKAGES += \
     audio.usb.default
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/audio/asound.conf:system/etc/asound.conf \
-    device/asus/mofd-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    device/asus/mofd-common/audio/route_criteria.conf:system/etc/route_criteria.conf
+    device/asus/T00F/audio/asound.conf:system/etc/asound.conf \
+    device/asus/T00F/audio/audio_policy.conf:system/etc/audio_policy.conf \
+    device/asus/T00F/audio/route_criteria.conf:system/etc/route_criteria.conf
 
 # Boot image hackery
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/releasetools/mkbootimg:install/bin/mkbootimg \
-    device/asus/mofd-common/releasetools/unmkbootimg:install/bin/unmkbootimg \
-    device/asus/mofd-common/releasetools/sign_boot.sh:install/bin/sign_boot.sh
+    device/asus/T00F/releasetools/mkbootimg:install/bin/mkbootimg \
+    device/asus/T00F/releasetools/unmkbootimg:install/bin/unmkbootimg \
+    device/asus/T00F/releasetools/sign_boot.sh:install/bin/sign_boot.sh
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+    device/asus/T00F/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 PRODUCT_PROPERTY_OVERRIDES += \
     bt.hfp.WideBandSpeechEnabled=true
@@ -60,7 +62,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Camera
 PRODUCT_PACKAGES += \
     bspcapability \
-    camera.mofd_v1 \
+    camera.redhookbay \
     libshim_camera \
     Snap
 
@@ -79,7 +81,7 @@ PRODUCT_PACKAGES += \
     pvr_drv_video
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/powervr.ini:system/etc/powervr.ini
+    device/asus/T00F/powervr.ini:system/etc/powervr.ini
 
 # Factory reset protection
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -91,8 +93,8 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/gps.conf:system/etc/gps.conf \
-    device/asus/mofd-common/configs/gps.xml:system/etc/gps.xml
+    device/asus/T00F/configs/gps.conf:system/etc/gps.conf \
+    device/asus/T00F/configs/gps.xml:system/etc/gps.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.spid.gps.tty=ttyMFD2 \
@@ -115,17 +117,17 @@ PRODUCT_PACKAGES += \
 
 # Key layout files
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
-    device/asus/mofd-common/keylayout/ftxxxx_ts.kcm:system/usr/keychars/ftxxxx_ts.kcm \
-    device/asus/mofd-common/keylayout/ftxxxx_ts.kl:system/usr/keylayout/ftxxxx_ts.kl \
-    device/asus/mofd-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    device/asus/mofd-common/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl \
-    device/asus/mofd-common/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
-    device/asus/mofd-common/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
+    device/asus/T00F/keylayout/ASUS_TransKeyboard.kl:system/usr/keylayout/ASUS_TransKeyboard.kl \
+    device/asus/T00F/keylayout/ftxxxx_ts.kcm:system/usr/keychars/ftxxxx_ts.kcm \
+    device/asus/T00F/keylayout/ftxxxx_ts.kl:system/usr/keylayout/ftxxxx_ts.kl \
+    device/asus/T00F/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    device/asus/T00F/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl:system/usr/keylayout/lm49453-audio_Intel_MID_Audio_Jack.kl \
+    device/asus/T00F/keylayout/Vendor_0b05_Product_17fc.kl:system/usr/keylayout/Vendor_0b05_Product_17fc.kl \
+    device/asus/T00F/keylayout/Vendor_0b05_Product_1803.kl:system/usr/keylayout/Vendor_0b05_Product_1803.kl
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.moorefield
+    lights.clovertrail
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -135,11 +137,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     media.aac_51_output_enabled=true \
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/media/media_codecs.xml:system/etc/media_codecs.xml \
-    device/asus/mofd-common/media/media_profiles.xml:system/etc/media_profiles.xml \
-    device/asus/mofd-common/media/mfx_omxil_core.conf:system/etc/mfx_omxil_core.conf \
-    device/asus/mofd-common/media/video_isv_profile.xml:system/etc/video_isv_profile.xml \
-    device/asus/mofd-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
+    device/asus/T00F/media/media_codecs.xml:system/etc/media_codecs.xml \
+    device/asus/T00F/media/media_profiles.xml:system/etc/media_profiles.xml \
+    device/asus/T00F/media/mfx_omxil_core.conf:system/etc/mfx_omxil_core.conf \
+    device/asus/T00F/media/video_isv_profile.xml:system/etc/video_isv_profile.xml \
+    device/asus/T00F/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
@@ -165,8 +167,8 @@ PRODUCT_PACKAGES += \
     libmixvbp_h264 \
     libmixvbp_h264secure \
     libmixvbp_vc1 \
-    libmixvbp_vp8 \
-    libmixvbp_mpeg2 \
+    
+    
     libva_videodecoder \
     libva_videoencoder
 
@@ -176,13 +178,13 @@ PRODUCT_PACKAGES += \
     libOMXVideoDecoderH263 \
     libOMXVideoDecoderMPEG4 \
     libOMXVideoDecoderWMV \
-    libOMXVideoDecoderVP8 \
-    libOMXVideoDecoderMPEG2 \
-    libOMXVideoDecoderVP9HWR \
+    
+    
+    
     libOMXVideoEncoderAVC \
     libOMXVideoEncoderH263 \
     libOMXVideoEncoderMPEG4 \
-    libOMXVideoEncoderVP8
+    
 
 # Media: libISV
 PRODUCT_PACKAGES += \
@@ -190,7 +192,7 @@ PRODUCT_PACKAGES += \
 
 # PowerHAL
 PRODUCT_PACKAGES += \
-    power.mofd_v1
+    power.redhookbay
 
 # Radio
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -202,7 +204,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     config_init.sh \
-    fstab.mofd_v1 \
+    fstab.redhookbay \
     init.avc.rc \
     init.bt.rc \
     init.bt.vendor.rc \
@@ -211,24 +213,28 @@ PRODUCT_PACKAGES += \
     init.config_init.rc \
     init.debug.rc \
     init.diag.rc \
+    init.firmware.rc \
     init.gps.rc \
     init.logtool.rc \
     init.modem.rc \
-    init.mofd_v1.rc \
-    init.nfc.rc \
+    init.redhookbay.rc \
     init.platform.usb.rc \
-    init.power.mofd_v1.rc \
-    init.recovery.mofd_v1.rc \
+    init.power.redhookbay.rc \
+    init.recovery.redhookbay.rc \
     init.watchdog.rc \
     init.wifi.rc \
     init.wifi.vendor.rc \
     init.zram.rc \
     thermald \
-    ueventd.mofd_v1.rc
+    ueventd.redhookbay.rc \
+    gps_daemon.sh \
+    gps_lto.sh \
+    init.compass.rc \
+    init.wireless.rc
 
 # Sensors
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
+    device/asus/T00F/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
 
 # Shims
 PRODUCT_PACKAGES += \
@@ -240,9 +246,7 @@ ENABLE_ITUXD := true
 PRODUCT_PACKAGES += \
     ituxd
 
-# IMG graphics
-PRODUCT_PACKAGES += \
-    hwcomposer.moorefield
+
 
 # pvr
 PRODUCT_PACKAGES += \
@@ -286,20 +290,18 @@ PRODUCT_PACKAGES += \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+    device/asus/T00F/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
-$(call inherit-product-if-exists, vendor/asus/mofd-common/mofd-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/T00F/T00F-vendor.mk)
 
-# stlport required for our LP blobs
-PRODUCT_PACKAGES += \
-    libstlport
+
 
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 
 # specific management of sep_policy.conf
 PRODUCT_COPY_FILES += \
-    device/asus/mofd-common/sep_policy.conf:system/etc/security/sep_policy.conf
+    device/asus/T00F/sep_policy.conf:system/etc/security/sep_policy.conf
 
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
